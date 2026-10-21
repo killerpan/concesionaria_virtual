@@ -30,7 +30,7 @@ Aplicación de un solo archivo (`concesionaria_demo.html`). Todo el HTML, CSS y 
 ```
 concesionaria_demo.html   ← aplicación completa
 img/
-  chileautos.svg          ← logo ChileAutos
+  chileautos.svg          ← logo
   concesionaria_edif.png  ← imagen de edificio para el mapa
   splash.jpg              ← pantalla de inicio
   autos/                  ← imágenes de los 18 vehículos
