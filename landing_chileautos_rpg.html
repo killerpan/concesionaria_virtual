@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chileautos — Concesionaria RPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ca-blue:#1a73e8;
+    --ca-blue-dark:#0c5fcc;
+    --ca-orange:#ff7a1a;
+    --ca-text:#1f2937;
+    --ca-muted:#6b7280;
+    --ca-border:#e5e7eb;
+    --ca-bg:#ffffff;
+    --rpg-purple:#5b2a86;
+    --rpg-purple-deep:#2a1145;
+    --rpg-orange:#ff8a1f;
+    --rpg-yellow:#ffd84d;
+    --rpg-pink:#ff4dc4;
+    --rpg-cyan:#48e1ff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color:var(--ca-text);
+    background:#fff;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    height:84px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 48px;
+    background:#fff;
+    border-bottom:1px solid #f1f1f1;
+  }
+  .logo{display:flex;align-items:center;gap:6px}
+  .logo svg{display:block}
+  .nav{display:flex;align-items:center;gap:48px}
+  .nav a{font-size:16px;color:#222;font-weight:500}
+  .nav a:hover{color:var(--ca-blue)}
+  .top-right{display:flex;align-items:center;gap:24px}
+  .top-right a.login{font-size:15px;color:#222;font-weight:500}
+  .btn-vende{
+    border:1.5px solid var(--ca-orange);
+    color:var(--ca-orange);
+    background:#fff;
+    padding:11px 22px;
+    border-radius:6px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .btn-vende:hover{background:var(--ca-orange);color:#fff}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    height:520px;
+    background:#0a1530 url('https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=2400&q=80') center/cover no-repeat;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(8,18,46,.55) 0%, rgba(8,18,46,.25) 40%, rgba(8,18,46,.85) 100%);
+  }
+  .hero-content{
+    position:relative;z-index:2;
+    max-width:1280px;margin:0 auto;
+    height:100%;
+    display:flex;align-items:center;
+    padding:0 48px;
+  }
+  .publica-badge{
+    display:inline-flex;align-items:center;
+    background:#fff;
+    padding:18px 26px 18px 26px;
+    color:#0a1530;
+    font-weight:800;
+    line-height:.95;
+    letter-spacing:.5px;
+    clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 60%, 18px 50%, 0 40%);
+    font-size:30px;
+  }
+  .publica-badge span{display:block;font-size:30px}
+  .hero-title{
+    margin-left:18px;
+    color:#fff;
+    font-weight:800;
+    font-style:italic;
+    line-height:.95;
+    letter-spacing:1px;
+  }
+  .hero-title .pink{color:#ff4db1;font-size:48px;display:block}
+  .hero-title .white{color:#fff;font-size:60px;display:block;margin-top:4px}
+
+  /* ---------- Page wrap ---------- */
+  .page{
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 48px;
+  }
+
+  /* ---------- RPG Banner ---------- */
+  .rpg-banner{
+    position:relative;
+    margin:-90px auto 0;
+    z-index:5;
+    border-radius:18px;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(ellipse 80% 90% at 18% 0%, rgba(255,77,196,.35) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 100%, rgba(72,225,255,.3) 0%, transparent 55%),
+      linear-gradient(135deg,#3a1163 0%, #5b2a86 45%, #7a2d9c 100%);
+    box-shadow:0 24px 60px -20px rgba(58,17,99,.5), 0 8px 22px -8px rgba(0,0,0,.3);
+    border:2px solid rgba(255,216,77,.35);
+  }
+  .rpg-banner::before{
+    /* pixel grid texture */
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size:8px 8px;
+    mix-blend-mode:overlay;
+    opacity:.6;
+  }
+  .rpg-banner::after{
+    /* scanlines */
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 2px, transparent 2px 4px);
+    opacity:.25;
+  }
+  .rpg-inner{
+    position:relative;z-index:2;
+    display:grid;
+    grid-template-columns:300px 1fr auto;
+    align-items:center;
+    gap:32px;
+    padding:22px 28px;
+    min-height:160px;
+  }
+
+  /* Pixel art scene (left) */
+  .pixel-scene{
+    position:relative;
+    width:300px;height:124px;
+    border-radius:10px;
+    overflow:hidden;
+    background:linear-gradient(180deg,#5b2a86 0%, #ff7a1f 70%, #ffd84d 100%);
+    image-rendering:pixelated;
+    box-shadow:inset 0 0 0 2px rgba(0,0,0,.35), inset 0 0 0 4px rgba(255,216,77,.4);
+  }
+  /* skyline silhouette */
+  .pixel-scene .city{
+    position:absolute;left:0;right:0;bottom:34px;height:60px;
+    background:
+      linear-gradient(to right,
+        #2a1145 0 6%, transparent 6% 8%,
+        #2a1145 8% 14%, transparent 14% 16%,
+        #3a1a5e 16% 26%, transparent 26% 28%,
+        #2a1145 28% 38%, transparent 38% 40%,
+        #3a1a5e 40% 52%, transparent 52% 54%,
+        #2a1145 54% 64%, transparent 64% 66%,
+        #3a1a5e 66% 78%, transparent 78% 80%,
+        #2a1145 80% 92%, transparent 92% 94%,
+        #3a1a5e 94% 100%);
+    background-size:100% 100%;
+    clip-path:polygon(
+      0% 100%,
+      0% 60%, 5% 60%, 5% 30%, 9% 30%, 9% 50%, 14% 50%, 14% 20%, 18% 20%, 18% 45%,
+      24% 45%, 24% 15%, 30% 15%, 30% 40%, 36% 40%, 36% 25%, 42% 25%, 42% 55%,
+      50% 55%, 50% 10%, 56% 10%, 56% 35%, 62% 35%, 62% 50%, 70% 50%, 70% 20%,
+      78% 20%, 78% 45%, 86% 45%, 86% 30%, 94% 30%, 94% 55%, 100% 55%, 100% 100%);
+  }
+  .pixel-scene .stars{
+    position:absolute;inset:0;
+    background-image:
+      radial-gradient(2px 2px at 12% 18%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 28% 9%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 46% 22%, #ffd84d, transparent 50%),
+      radial-gradient(2px 2px at 67% 12%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 84% 25%, #48e1ff, transparent 50%),
+      radial-gradient(2px 2px at 92% 8%, #fff, transparent 50%);
+  }
+  .pixel-scene .ground{
+    position:absolute;left:0;right:0;bottom:0;height:34px;
+    background:
+      repeating-linear-gradient(90deg, #1a1330 0 16px, #221638 16px 32px);
+  }
+  .pixel-scene .road-line{
+    position:absolute;left:0;right:0;bottom:14px;height:4px;
+    background:repeating-linear-gradient(90deg, #ffd84d 0 12px, transparent 12px 24px);
+  }
+  /* Cars (CSS pixel art) */
+  .px-car{
+    position:absolute;
+    image-rendering:pixelated;
+  }
+  .px-car .body{
+    position:absolute;border-radius:2px;
+  }
+  .px-car .roof{position:absolute}
+  .px-car .wheel{position:absolute;width:8px;height:8px;background:#0b0b14;border-radius:50%;box-shadow:inset 0 0 0 2px #2a2a3a}
+
+  /* red sportscar */
+  .car-red{ left:128px; bottom:18px; width:96px; height:36px; }
+  .car-red .body{ left:0; bottom:6px; width:96px; height:18px; background:#e23b3b; box-shadow:inset 0 -4px 0 #8a1a1a, inset 0 2px 0 #ff7373; }
+  .car-red .roof{ left:18px; bottom:24px; width:54px; height:12px; background:#e23b3b; box-shadow:inset 0 2px 0 #ff7373, inset 0 -2px 0 #8a1a1a; }
+  .car-red .glass{ position:absolute; left:24px; bottom:26px; width:42px; height:8px; background:#48e1ff; box-shadow:inset 0 -2px 0 #1a8aaa; }
+  .car-red .spoiler{ position:absolute; right:-2px; bottom:18px; width:10px; height:6px; background:#8a1a1a; }
+  .car-red .light{ position:absolute; left:90px; bottom:14px; width:6px; height:6px; background:#ffd84d; box-shadow:0 0 8px #ffd84d; }
+  .car-red .wheel.l{ left:10px; bottom:0 }
+  .car-red .wheel.r{ left:78px; bottom:0 }
+
+  /* yellow car */
+  .car-yellow{ left:14px; bottom:14px; width:60px; height:26px;}
+  .car-yellow .body{ left:0; bottom:4px; width:60px; height:14px; background:#ffb01f; box-shadow:inset 0 -3px 0 #a86b00, inset 0 2px 0 #ffd97a; }
+  .car-yellow .roof{ left:10px; bottom:18px; width:34px; height:8px; background:#ffb01f; box-shadow:inset 0 -2px 0 #a86b00; }
+  .car-yellow .glass{ position:absolute; left:14px; bottom:20px; width:26px; height:6px; background:#48e1ff; }
+  .car-yellow .wheel.l{ left:6px; bottom:0 }
+  .car-yellow .wheel.r{ left:46px; bottom:0 }
+
+  /* green car (right) */
+  .car-green{ right:8px; bottom:14px; width:62px; height:26px;}
+  .car-green .body{ left:0; bottom:4px; width:62px; height:14px; background:#3aa856; box-shadow:inset 0 -3px 0 #1a5a2a, inset 0 2px 0 #7be08e; }
+  .car-green .roof{ left:12px; bottom:18px; width:34px; height:8px; background:#3aa856; box-shadow:inset 0 -2px 0 #1a5a2a; }
+  .car-green .glass{ position:absolute; left:16px; bottom:20px; width:26px; height:6px; background:#48e1ff; }
+  .car-green .wheel.l{ left:6px; bottom:0 }
+  .car-green .wheel.r{ left:48px; bottom:0 }
+
+  /* salesman pixel guy */
+  .px-guy{
+    position:absolute; left:236px; bottom:18px; width:18px; height:36px;
+  }
+  .px-guy .head{ position:absolute; top:0; left:3px; width:12px; height:12px; background:#ffd2a8; box-shadow:inset 0 -2px 0 #d49b6a; }
+  .px-guy .hair{ position:absolute; top:0; left:3px; width:12px; height:5px; background:#5a2e1a; }
+  .px-guy .shirt{ position:absolute; top:12px; left:1px; width:16px; height:12px; background:#48a8ff; box-shadow:inset 0 -2px 0 #1a5fbf; }
+  .px-guy .pants{ position:absolute; top:24px; left:3px; width:12px; height:12px; background:#1a2238; }
+  .px-guy .key{ position:absolute; top:18px; right:-6px; width:8px; height:4px; background:#ffd84d; box-shadow:0 0 6px #ffd84d; }
+
+  /* RPG text */
+  .rpg-text{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+  .rpg-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Press Start 2P', monospace;
+    font-size:10px;
+    color:var(--rpg-yellow);
+    letter-spacing:1px;
+    text-shadow:2px 2px 0 #2a1145;
+  }
+  .rpg-eyebrow .pulse{
+    width:8px;height:8px;background:#ff4dc4;border-radius:1px;
+    box-shadow:0 0 8px #ff4dc4;
+    animation:blink 1s steps(2,end) infinite;
+  }
+  @keyframes blink{ 50%{opacity:.2} }
+  .rpg-title{
+    font-family:'Press Start 2P', monospace;
+    font-size:30px;
+    line-height:1.1;
+    margin:0;
+    color:#fff;
+    letter-spacing:1px;
+    text-shadow:
+      3px 3px 0 #d2691f,
+      6px 6px 0 #2a1145;
+    background:linear-gradient(180deg, #ffd84d 0%, #ffb01f 50%, #ff7a1f 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-stroke:2px #2a1145;
+    color:transparent;
+  }
+  .rpg-sub{
+    font-family:'Open Sans', sans-serif;
+    font-size:15px;
+    color:#f0e0ff;
+    margin:2px 0 0;
+    max-width:560px;
+    line-height:1.45;
+  }
+  .rpg-meta{
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    margin-top:6px;
+  }
+  .rpg-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:5px 10px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,216,77,.35);
+    border-radius:4px;
+    font-family:'Press Start 2P', monospace;
+    font-size:9px;
+    color:#ffd84d;
+    letter-spacing:.5px;
+  }
+  .rpg-chip.cyan{ color:var(--rpg-cyan); border-color:rgba(72,225,255,.4) }
+  .rpg-chip.pink{ color:var(--rpg-pink); border-color:rgba(255,77,196,.4) }
+  .rpg-chip svg{display:block}
+
+  /* Big play button */
+  .rpg-cta{
+    display:flex;flex-direction:column;align-items:flex-end;gap:8px;
+    flex-shrink:0;
+  }
+  .btn-play{
+    cursor:pointer;
+    border:none;
+    font-family:'Press Start 2P', monospace;
+    font-size:16px;
+    color:#2a1145;
+    background:linear-gradient(180deg,#ffd84d 0%, #ffb01f 60%, #ff7a1f 100%);
+    padding:18px 28px;
+    border-radius:8px;
+    letter-spacing:1px;
+    box-shadow:
+      0 0 0 3px #2a1145,
+      0 0 0 5px #ffd84d,
+      0 8px 0 0 #8a3a00,
+      0 14px 24px -6px rgba(0,0,0,.5);
+    transition:transform .12s, box-shadow .12s;
+    display:inline-flex;align-items:center;gap:10px;
+    position:relative;
+  }
+  .btn-play:hover{
+    transform:translateY(-2px);
+    box-shadow:
+      0 0 0 3px #2a1145,
+      0 0 0 5px #fff7c2,
+      0 10px 0 0 #8a3a00,
+      0 18px 28px -6px rgba(0,0,0,.55);
+  }
+  .btn-play:active{
+    transform:translateY(4px);
+    box-shadow:
+      0 0 0 3px #2a1145,
+      0 0 0 5px #ffd84d,
+      0 4px 0 0 #8a3a00,
+      0 6px 14px -4px rgba(0,0,0,.5);
+  }
+  .btn-play .arrow{
+    display:inline-block;
+    width:0;height:0;
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+    border-left:12px solid #2a1145;
+    margin-right:2px;
+  }
+  .rpg-hint{
+    font-family:'Press Start 2P', monospace;
+    font-size:9px;
+    color:rgba(255,255,255,.7);
+    letter-spacing:1px;
+  }
+
+  /* Coin sparkle */
+  .coin{
+    position:absolute;width:14px;height:14px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff7c2, #ffd84d 50%, #c98a00 100%);
+    box-shadow:0 0 10px rgba(255,216,77,.7);
+    animation:bob 2.4s ease-in-out infinite;
+  }
+  .coin.c1{ top:14px; right:240px; animation-delay:0s }
+  .coin.c2{ bottom:18px; right:300px; width:10px; height:10px; animation-delay:.6s }
+  .coin.c3{ top:30px; left:34%; width:8px; height:8px; animation-delay:1.2s }
+  @keyframes bob{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } }
+
+  /* ---------- Search card ---------- */
+  .search-card{
+    margin:24px auto 0;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 18px 40px -18px rgba(11,30,70,.18), 0 4px 14px -6px rgba(11,30,70,.08);
+    padding:28px 28px 22px;
+  }
+  .search-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr 1.2fr auto;
+    gap:18px;
+    align-items:end;
+  }
+  .field{ display:flex;flex-direction:column;gap:6px }
+  .field label{ font-size:13px; color:#374151; font-weight:500 }
+  .select, .input{
+    height:48px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    padding:0 16px;
+    font-size:15px;
+    color:var(--ca-text);
+    background:#fff;
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'><path d='M3 5l4 4 4-4' stroke='%23222' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    width:100%;
+  }
+  .input{ background-image:none }
+  .input::placeholder{ color:#9ca3af }
+  .select.muted{ color:#9ca3af }
+  .btn-search{
+    height:48px;
+    padding:0 22px;
+    background:var(--ca-blue);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .btn-search:hover{ background:var(--ca-blue-dark) }
+  .filters-row{
+    display:flex;gap:32px;flex-wrap:wrap;
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid #f1f1f1;
+  }
+  .filter-link{
+    font-size:14px; color:#374151; cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;
+  }
+  .filter-link::after{
+    content:"";width:0;height:0;
+    border-top:5px solid #6b7280;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+  }
+
+  /* ---------- Autofact strip (decorative) ---------- */
+  .autofact{
+    margin:36px auto 60px;
+    background:#1f2685;
+    border-radius:14px;
+    height:130px;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:.5px;
+    position:relative;overflow:hidden;
+  }
+  .autofact .label{ font-family:'Open Sans', sans-serif; font-style:italic; font-size:22px }
+  .autofact .right{ position:absolute; right:32px; top:50%; transform:translateY(-50%); font-size:30px; font-style:italic;}
+
+  /* ---------- Game overlay ---------- */
+  .game-overlay{
+    position:fixed; inset:0;
+    background:#000;
+    display:none;
+    z-index:100;
+    align-items:center;justify-content:center;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .game-overlay.active{ display:flex; animation:fadeIn .3s ease both; }
+  @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+  .game-stage{
+    position:relative;
+    width:min(92vw, 1200px);
+    aspect-ratio: 16 / 9;
+    border-radius:8px;
+    overflow:hidden;
+    background:linear-gradient(180deg, #1a1242 0%, #4a1a6e 60%, #ff7a1f 100%);
+    box-shadow:0 0 0 4px #ffd84d, 0 0 60px rgba(255,122,31,.4);
+    image-rendering:pixelated;
+  }
+  .game-stage::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 2px, transparent 2px 4px);
+    opacity:.5;
+  }
+
+  /* Loading state */
+  .loading{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:24px;
+    background:#000;
+    z-index:5;
+    transition:opacity .4s ease;
+  }
+  .loading.gone{ opacity:0; pointer-events:none }
+  .loading h3{
+    font-family:'Press Start 2P', monospace;
+    font-size:22px;
+    color:#ffd84d;
+    margin:0;
+    letter-spacing:1px;
+    text-shadow:3px 3px 0 #d2691f, 6px 6px 0 #2a1145;
+  }
+  .loading-bar{
+    width:340px;height:18px;border:2px solid #ffd84d;
+    background:#2a1145;
+    position:relative;
+    box-shadow:0 0 0 2px #000;
+  }
+  .loading-bar .fill{
+    position:absolute;left:0;top:0;bottom:0;width:0;
+    background:repeating-linear-gradient(90deg,#ff4dc4 0 12px, #ff7a1f 12px 24px);
+    transition:width .15s linear;
+  }
+  .loading-pct{
+    font-family:'Press Start 2P', monospace; color:#fff; font-size:10px;letter-spacing:1px;
+  }
+
+  /* Title/start screen (after loading) */
+  .start-screen{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    padding:0 0 56px 0;
+    z-index:3;
+  }
+
+  /* Pixel scene (large) */
+  .scene-large{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,#2a1145 0%, #5b2a86 35%, #ff4dc4 70%, #ff7a1f 100%);
+    overflow:hidden;
+  }
+  .scene-large .stars-l{
+    position:absolute;inset:0;
+    background-image:
+      radial-gradient(2px 2px at 8% 14%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 22% 6%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 38% 18%, #ffd84d, transparent 50%),
+      radial-gradient(3px 3px at 55% 9%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 70% 16%, #48e1ff, transparent 50%),
+      radial-gradient(2px 2px at 84% 6%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 92% 20%, #ffd84d, transparent 50%),
+      radial-gradient(2px 2px at 14% 26%, #fff, transparent 50%),
+      radial-gradient(2px 2px at 60% 24%, #fff, transparent 50%);
+    animation:twinkle 3s steps(4) infinite;
+  }
+  @keyframes twinkle{ 50%{opacity:.7} }
+  .scene-large .skyline{
+    position:absolute;left:0;right:0;bottom:32%;height:30%;
+    background:#2a1145;
+    clip-path:polygon(
+      0% 100%,
+      0% 70%, 4% 70%, 4% 40%, 8% 40%, 8% 60%, 12% 60%, 12% 25%, 17% 25%, 17% 55%,
+      22% 55%, 22% 18%, 28% 18%, 28% 45%, 34% 45%, 34% 30%, 40% 30%, 40% 60%,
+      48% 60%, 48% 12%, 55% 12%, 55% 38%, 62% 38%, 62% 55%, 70% 55%, 70% 22%,
+      78% 22%, 78% 50%, 86% 50%, 86% 32%, 94% 32%, 94% 60%, 100% 60%, 100% 100%);
+  }
+  .scene-large .windows{
+    position:absolute;left:0;right:0;bottom:32%;height:30%;
+    background-image:
+      radial-gradient(circle 2px at 6% 70%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 6% 80%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 14% 60%, #48e1ff, transparent 60%),
+      radial-gradient(circle 2px at 14% 75%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 24% 50%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 24% 70%, #48e1ff, transparent 60%),
+      radial-gradient(circle 2px at 36% 65%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 50% 40%, #48e1ff, transparent 60%),
+      radial-gradient(circle 2px at 50% 60%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 64% 55%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 76% 45%, #48e1ff, transparent 60%),
+      radial-gradient(circle 2px at 76% 65%, #ffd84d, transparent 60%),
+      radial-gradient(circle 2px at 88% 60%, #ffd84d, transparent 60%);
+    animation:flicker 2.2s steps(3) infinite;
+  }
+  @keyframes flicker{ 33%{opacity:.6} 66%{opacity:.9} }
+  .scene-large .ground-l{
+    position:absolute;left:0;right:0;bottom:0;height:32%;
+    background:
+      linear-gradient(180deg, #2a1145 0%, #1a0a2a 100%);
+  }
+  .scene-large .road{
+    position:absolute;left:0;right:0;bottom:8%;height:8%;
+    background:#1a0a2a;
+    border-top:3px solid #ffd84d;
+    border-bottom:3px solid #ffd84d;
+  }
+  .scene-large .road .dash{
+    position:absolute;left:0;right:0;top:50%;height:4px;transform:translateY(-50%);
+    background:repeating-linear-gradient(90deg,#ffd84d 0 24px, transparent 24px 48px);
+  }
+
+  /* Hero pixel car */
+  .hero-car{
+    position:absolute;
+    left:50%;
+    bottom:18%;
+    transform:translateX(-50%);
+    width:240px;height:90px;
+    image-rendering:pixelated;
+  }
+  .hero-car .body{ position:absolute; left:0; bottom:18px; width:240px; height:42px; background:#e23b3b;
+    box-shadow:inset 0 -8px 0 #8a1a1a, inset 0 4px 0 #ff7373; border-radius:4px;}
+  .hero-car .roof{ position:absolute; left:48px; bottom:60px; width:130px; height:24px; background:#e23b3b;
+    box-shadow:inset 0 4px 0 #ff7373, inset 0 -4px 0 #8a1a1a; border-radius:6px 6px 0 0;}
+  .hero-car .glass{ position:absolute; left:60px; bottom:64px; width:106px; height:18px; background:#48e1ff;
+    box-shadow:inset 0 -4px 0 #1a8aaa;}
+  .hero-car .spoiler{ position:absolute; right:-6px; bottom:46px; width:22px; height:14px; background:#8a1a1a;}
+  .hero-car .light{ position:absolute; left:222px; bottom:30px; width:14px; height:14px; background:#ffd84d;
+    box-shadow:0 0 16px #ffd84d, 0 0 32px #ffd84d;}
+  .hero-car .wheel{ position:absolute; bottom:0; width:24px; height:24px; background:#0b0b14; border-radius:50%;
+    box-shadow:inset 0 0 0 5px #2a2a3a, inset 0 0 0 9px #0b0b14;}
+  .hero-car .wheel.l{ left:24px }
+  .hero-car .wheel.r{ left:192px }
+  .hero-car .glow{
+    position:absolute; left:-30px; right:-30px; bottom:-10px; height:30px;
+    background:radial-gradient(ellipse at center, rgba(255,216,77,.6), transparent 70%);
+    filter:blur(8px);
+  }
+
+  /* Title */
+  .start-title{
+    position:relative;
+    font-family:'Press Start 2P', monospace;
+    font-size:54px;
+    line-height:1;
+    margin:0 0 14px;
+    letter-spacing:2px;
+    color:#ffd84d;
+    text-align:center;
+    background:linear-gradient(180deg,#ffd84d 0%, #ffb01f 50%, #ff4dc4 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-stroke:3px #2a1145;
+    color:transparent;
+    text-shadow:
+      4px 4px 0 #d2691f,
+      8px 8px 0 #2a1145;
+    z-index:3;
+  }
+  .start-sub{
+    position:relative;
+    font-family:'Press Start 2P', monospace;
+    font-size:14px;
+    color:#fff;
+    margin:0 0 0;
+    text-shadow:2px 2px 0 #2a1145;
+    z-index:3;
+    letter-spacing:1px;
+  }
+  .press-key{
+    position:relative;z-index:3;
+    margin-top:auto;
+    margin-bottom:28px;
+    padding:14px 28px;
+    background:#000;
+    border:3px solid #ffd84d;
+    color:#fff;
+    font-family:'Press Start 2P', monospace;
+    font-size:18px;
+    letter-spacing:2px;
+    display:inline-flex;align-items:center;gap:14px;
+    animation:pressBlink 1s steps(2) infinite;
+  }
+  @keyframes pressBlink{ 50%{ opacity:.4 } }
+  .press-key .triangle{
+    width:0;height:0;
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+  }
+  .press-key .left{ border-right:14px solid #ffd84d }
+  .press-key .right{ border-left:14px solid #ffd84d }
+
+  /* Close */
+  .close-game{
+    position:absolute; top:18px; right:18px;
+    z-index:10;
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(0,0,0,.7); color:#fff;
+    border:2px solid #ffd84d;
+    cursor:pointer;
+    font-family:'Press Start 2P', monospace;
+    font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .close-game:hover{ background:#ffd84d;color:#2a1145 }
+
+  .game-hint{
+    position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+    z-index:10;
+    color:rgba(255,255,255,.55);
+    font-family:'Press Start 2P', monospace;
+    font-size:9px; letter-spacing:1px;
+  }
+
+  @media (max-width: 980px){
+    .nav{display:none}
+    .topbar{padding:0 20px;height:64px}
+    .hero{height:380px}
+    .hero-content{padding:0 20px}
+    .hero-title .pink{font-size:32px}
+    .hero-title .white{font-size:38px}
+    .page{padding:0 20px}
+    .rpg-banner{margin-top:-60px}
+    .rpg-inner{ grid-template-columns:1fr; gap:18px; padding:18px }
+    .pixel-scene{ width:100%; height:100px }
+    .rpg-title{font-size:22px}
+    .search-row{ grid-template-columns:1fr 1fr; }
+    .start-title{font-size:32px}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a class="logo" href="#" aria-label="Chileautos">
+    <img src="assets/chileautos-logo.png" alt="Chileautos" style="height:54px;width:auto;display:block" />
+  </a>
+  <nav class="nav">
+    <a href="#">Compra</a>
+    <a href="#">Vende</a>
+    <a href="#">Servicios</a>
+    <a href="#">Noticias</a>
+    <a href="#">Ayuda</a>
+  </nav>
+  <div class="top-right">
+    <a class="login" href="#">Ingresar/Registrarse</a>
+    <button class="btn-vende">Vende tu auto</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="publica-badge"><span>PUBLICA</span><span>TU AUTO</span></div>
+    <div class="hero-title">
+      <span class="pink">PRECIO FIJO</span>
+      <span class="white">SIN COMISIÓN</span>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE -->
+<main class="page">
+
+  <!-- RPG BANNER (above search) -->
+  <section class="rpg-banner" role="region" aria-label="Concesionaria RPG">
+    <div class="coin c1"></div>
+    <div class="coin c2"></div>
+    <div class="coin c3"></div>
+    <div class="rpg-inner">
+
+      <!-- Pixel art scene -->
+      <img src="img/splash.png" alt="Pixel art scene" aria-hidden="true" style="display:block;max-width:100%;height:auto;">
+
+      <!-- Text -->
+      <div class="rpg-text">
+        <div class="rpg-eyebrow"><span class="pulse"></span> ¡NUEVO MINI-JUEGO EN CHILEAUTOS!</div>
+        <h2 class="rpg-title">JUEGA CONCESIONARIA RPG</h2>
+        <p class="rpg-sub">Construye tu propia concesionaria, compra y vende autos, sube de nivel y conviértete en el rey del rubro automotor. ¡Tu aventura comienza ahora!</p>
+        <div class="rpg-meta">
+          <span class="rpg-chip">
+            <svg width="10" height="10" viewBox="0 0 10 10"><rect x="2" y="0" width="6" height="2" fill="#ffd84d"/><rect x="0" y="2" width="10" height="6" fill="#ffd84d"/><rect x="2" y="8" width="6" height="2" fill="#ffd84d"/></svg>
+            GRATIS · 100% ONLINE
+          </span>
+          <span class="rpg-chip cyan">8-BIT · 2D RPG</span>
+          <span class="rpg-chip pink">+1.200 JUGADORES HOY</span>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="rpg-cta">
+        <button class="btn-play" id="play-btn" aria-label="Jugar Concesionaria RPG">
+          <span class="arrow"></span> JUGAR AHORA
+        </button>
+        <span class="rpg-hint">PRESS ▶ TO START</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="search-card">
+    <div class="search-row">
+      <div class="field">
+        <label>Tipo</label>
+        <select class="select">
+          <option>Nuevo / usado</option>
+          <option>Nuevo</option>
+          <option>Usado</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Marca</label>
+        <select class="select">
+          <option>Todas las marcas</option>
+          <option>Toyota</option>
+          <option>Chevrolet</option>
+          <option>Hyundai</option>
+          <option>Kia</option>
+          <option>Mazda</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Modelo</label>
+        <select class="select muted">
+          <option>Todos los modelos</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Palabra clave</label>
+        <input class="input" placeholder="Escribe palabra clave" />
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <button class="btn-search">Buscar 61,238 vehículos</button>
+      </div>
+    </div>
+    <div class="filters-row">
+      <span class="filter-link">Categoría vehículo</span>
+      <span class="filter-link">Región</span>
+      <span class="filter-link">Precio min</span>
+      <span class="filter-link">Precio max</span>
+      <span class="filter-link">Año min</span>
+      <span class="filter-link">Año max</span>
+    </div>
+  </section>
+
+  <!-- AUTOFACT STRIP -->
+  <section class="autofact" aria-hidden="true">
+    <span class="label">autofact · informe técnico para tu próximo auto</span>
+    <span class="right">autofact</span>
+  </section>
+
+</main>
+
+<!-- GAME OVERLAY -->
+<div class="game-overlay" id="game-overlay" role="dialog" aria-modal="true" aria-label="Concesionaria RPG">
+  <div class="game-stage">
+    <button class="close-game" id="close-game" aria-label="Cerrar juego">✕</button>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <h3>CARGANDO...</h3>
+      <div class="loading-bar"><div class="fill" id="loading-fill"></div></div>
+      <div class="loading-pct" id="loading-pct">0%</div>
+    </div>
+
+    <!-- Start screen -->
+    <div class="scene-large">
+      <div class="stars-l"></div>
+      <div class="skyline"></div>
+      <div class="windows"></div>
+      <div class="ground-l"></div>
+      <div class="road"><div class="dash"></div></div>
+      <div class="hero-car">
+        <div class="glow"></div>
+        <div class="body"></div>
+        <div class="roof"></div>
+        <div class="glass"></div>
+        <div class="spoiler"></div>
+        <div class="light"></div>
+        <div class="wheel l"></div>
+        <div class="wheel r"></div>
+      </div>
+    </div>
+
+    <div class="start-screen">
+      <h1 class="start-title">CONCESIONARIA<br>RPG</h1>
+      <p class="start-sub">TU AVENTURA COMIENZA</p>
+      <div class="press-key">
+        <span class="triangle left"></span>
+        PRESIONA UNA TECLA PARA COMENZAR
+        <span class="triangle right"></span>
+      </div>
+    </div>
+
+    <div class="game-hint">DEMO · CHILEAUTOS × CONCESIONARIA RPG</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const playBtn = document.getElementById('play-btn');
+  const overlay = document.getElementById('game-overlay');
+  const closeBtn = document.getElementById('close-game');
+  const loading = document.getElementById('loading');
+  const fill = document.getElementById('loading-fill');
+  const pct = document.getElementById('loading-pct');
+
+  function openGame(){
+    window.open('concesionaria_demo.html', '_blank');
+  }
+  function closeGame(){
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  playBtn.addEventListener('click', openGame);
+  closeBtn.addEventListener('click', closeGame);
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape') closeGame();
+  });
+})();
+</script>
+
+</body>
+</html>
